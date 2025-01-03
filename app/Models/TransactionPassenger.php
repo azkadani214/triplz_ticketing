@@ -17,4 +17,9 @@ class TransactionPassenger extends Model
         'date_of_bird',
         'nationality'
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }
