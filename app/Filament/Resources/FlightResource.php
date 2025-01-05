@@ -58,7 +58,7 @@ class FlightResource extends Resource
                                 ->schema([
                                     Forms\Components\Select::make('class_type')
                                         ->options([
-                                            'bussines' => 'Bisnis',
+                                            'business' => 'Bisnis',
                                             'economy' => 'Ekonomi',
                                         ])
                                         ->required(),

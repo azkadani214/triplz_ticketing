@@ -91,22 +91,34 @@ class Flight extends Model
 
     protected function getSeatsPerRow($classType)
     {
-        switch ($classType) {
+        switch (strtolower($classType)) {
             case 'business':
                 return 4;
             case 'economy':
                 return 6;
             default:
-                return 4;
+                throw new \Exception("Invalid class type: $classType");
         }
     }
 
+
     private function generateSeatCode($row, $column)
     {
-        $rowLetter = chr(64 + $row);
-
+        $rowLetter = $this->getRowLetter($row);
         return $rowLetter . $column;
     }
+
+    private function getRowLetter($row)
+    {
+        $letters = '';
+        while ($row > 0) {
+            $mod = ($row - 1) % 26;
+            $letters = chr(65 + $mod) . $letters;
+            $row = (int)(($row - $mod) / 26);
+        }
+        return $letters;
+    }
+
 
 
 

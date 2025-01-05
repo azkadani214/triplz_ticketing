@@ -10,12 +10,12 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {Schema::create('flight_seat', function (Blueprint $table) {
+    {Schema::create('flight_seats', function (Blueprint $table) {
         $table->id();
         $table->foreignId('flight_id')->constrained('flights')->cascadeOnDelete();  // Menentukan tabel flights
         $table->string('name');
         $table->string('row');
-        $table->string('columns');
+        $table->string('column');
         $table->enum('class_type', ['economy', 'business']);
         $table->boolean('is_available')->default(false);  // koreksi typo
         $table->softDeletes();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('flight_seat');
+        Schema::dropIfExists('flight_seats');
     }
 };
