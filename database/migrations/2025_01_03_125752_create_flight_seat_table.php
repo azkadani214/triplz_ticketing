@@ -13,6 +13,7 @@ return new class extends Migration
     {Schema::create('flight_seat', function (Blueprint $table) {
         $table->id();
         $table->foreignId('flight_id')->constrained('flights')->cascadeOnDelete();  // Menentukan tabel flights
+        $table->string('name');
         $table->string('row');
         $table->string('columns');
         $table->enum('class_type', ['economy', 'business']);

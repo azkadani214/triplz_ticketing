@@ -27,37 +27,59 @@ class FlightResource extends Resource
                     Forms\Components\Wizard\Step::make('Informasi Penerbangan')
                         ->schema([
                             Forms\Components\TextInput::make('flight_number')
-                            ->required()
-                            ->unique(ignoreRecord: true),
+                                ->required()
+                                ->unique(ignoreRecord: true),
 
                             Forms\Components\Select::make('airline_id')
-                            ->relationship('airline', 'name') // Menghubungkan dengan model airline
-                            ->required(),
+                                ->relationship('airline', 'name')
+                                ->required(),
                         ]),
                     Forms\Components\Wizard\Step::make('Rute Penerbangan')
                         ->schema([
                             Forms\Components\Repeater::make('flight_segments')
-                            ->relationship('segments')
-                            ->schema([
-                                Forms\Components\TextInput::make('sequence')
-                                ->numeric()
-                                ->required(),
-                                Forms\Components\Select::make('airport_id')
-                                ->relationship('airport', 'name')
-                                ->required(),
-                                Forms\Components\DateTimePicker::make('time')
-                                ->required(),
-                            ])
-
-                            ->collapsed('false')
-                            ->minItems(1),
-
+                                ->relationship('segments')
+                                ->schema([
+                                    Forms\Components\TextInput::make('sequence')
+                                        ->numeric()
+                                        ->required(),
+                                    Forms\Components\Select::make('airport_id')
+                                        ->relationship('airport', 'name')
+                                        ->required(),
+                                    Forms\Components\DateTimePicker::make('time')
+                                        ->required(),
+                                ])
+                                ->collapsed(false)
+                                ->minItems(1),
                         ]),
                     Forms\Components\Wizard\Step::make('Kelas Penerbangan')
                         ->schema([
-                            // ...
+                            Forms\Components\Repeater::make('flight_classes')
+                                ->relationship('classes')
+                                ->schema([
+                                    Forms\Components\Select::make('class_type')
+                                        ->options([
+                                            'bussines' => 'Bisnis',
+                                            'economy' => 'Ekonomi',
+                                        ])
+                                        ->required(),
+                                    Forms\Components\TextInput::make('price')
+                                        ->required()
+                                        ->prefix('IDR')
+                                        ->numeric()
+                                        ->minValue(0),
+                                    Forms\Components\TextInput::make('total_seats')
+                                        ->required()
+                                        ->numeric()
+                                        ->minValue(1)
+                                        ->label('Total Kursi'),
+                                    Forms\Components\Select::make('facilities')
+                                        ->relationship('facilities', 'name')
+                                        ->multiple()
+                                        ->required(),
+                                ])
+                                ->minItems(1),
                         ]),
-                ])->columnSpan(2)
+                ])->columnSpan(2),
             ]);
     }
 

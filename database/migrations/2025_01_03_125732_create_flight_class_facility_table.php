@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('flight_class_id')->references('id')->on('flight_classes')->onDelete('cascade');
             $table->foreignId('facility_id')->references('id')->on('facilities')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
