@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class FlightResource extends Resource
 {
     protected static ?string $model = Flight::class;
-
+    protected static ?string $navigationGroup = 'Penerbangan'; // Tambahkan ini
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -84,23 +84,42 @@ class FlightResource extends Resource
     }
 
     public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('flight_number'),
+            Tables\Columns\TextColumn::make('airline.name'),
+            Tables\Columns\TextColumn::make('segments')
+                ->label('Route & Duration')
+                ->formatStateUsing(function (Flight $record): string {
+                    $firstSegment = $record->segments->first();
+                    $lastSegment = $record->segments->last();
 
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+                    // Pastikan firstSegment dan lastSegment tidak null
+                    if (!$firstSegment || !$lastSegment) {
+                        return 'N/A';
+                    }
+
+                    $route = $firstSegment->airport->iata_code . '-' . $lastSegment->airport->iata_code;
+                    $duration = (new \DateTime($firstSegment->time))->format('d F Y H:i') . ' - ' .
+                                (new \DateTime($lastSegment->time))->format('d F Y H:i');
+
+                    return $route . ' | ' . $duration;
+                }),
+        ])
+        ->filters([
+            // Tambahkan filter jika diperlukan
+        ])
+        ->actions([
+            Tables\Actions\EditAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
+}
+
 
     public static function getRelations(): array
     {
