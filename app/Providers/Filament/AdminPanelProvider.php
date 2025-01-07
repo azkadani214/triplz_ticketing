@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Triplz - Administrator')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#0F1FD0',
             ])
             ->font('Plus Jakarta Sans')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
