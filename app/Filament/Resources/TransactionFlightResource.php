@@ -26,7 +26,16 @@ class TransactionFlightResource extends Resource
     {
         return $form
             ->schema([
-                //
+            Tables\Columns\TextColumn::make('code'),
+            Tables\Columns\TextColumn::make('flight.flight_number'),
+            Tables\Columns\TextColumn::make('name'),
+            Tables\Columns\TextColumn::make('email'),
+            Tables\Columns\TextColumn::make('phone'),
+            Tables\Columns\TextColumn::make('number_of_passenger'),
+            Tables\Columns\TextColumn::make('promo.code'),
+            Tables\Columns\TextColumn::make('payment_status'),
+            Tables\Columns\TextColumn::make('subtotal'),
+            Tables\Columns\TextColumn::make('grandtotal'),
             ]);
     }
 
@@ -41,6 +50,8 @@ class TransactionFlightResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

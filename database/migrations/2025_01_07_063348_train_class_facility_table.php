@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_trains', function (Blueprint $table) {
+        Schema::create('train_class_facility', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('train_class_id')->references('id')->on('train_classes')->onDelete('cascade');
+            $table->foreignId('facility_id')->references('id')->on('facilities')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction_trains');
+        //
     }
 };
