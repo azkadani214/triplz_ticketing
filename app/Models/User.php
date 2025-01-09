@@ -29,6 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar_url', // or column name according to config('filament-edit-profile.avatar_column', 'avatar_url')
+
     ];
 
     /**
@@ -52,7 +54,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    /**
+    /** 
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
