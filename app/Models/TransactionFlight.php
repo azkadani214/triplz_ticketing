@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TransactionFlight extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'code',
@@ -24,19 +25,50 @@ class TransactionFlight extends Model
         'grandtotal'
     ];
 
+    public function passengers(): HasMany
+    {
+        return $this->hasMany(TransactionPassenger::class, 'transaction_id');
+    }
 
-    public function flight()
+    public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
     }
 
-    public function promo()
+    public function flightClass(): BelongsTo
+    {
+        return $this->belongsTo(FlightClass::class);
+    }
+
+    public function promoCode(): BelongsTo
     {
         return $this->belongsTo(PromoCode::class);
     }
+}
 
-    public function passengers()
+class TransactionPassenger extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = [
+        'transaction_id',
+        'flight_seat_id',
+        'name',
+        'date_of_birth',
+        'nationality'
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'date'
+    ];
+
+    public function transaction(): BelongsTo
     {
-        return $this->hasMany(TransactionPassenger::class);
+        return $this->belongsTo(TransactionFlight::class, 'transaction_id');
+    }
+
+    public function flightSeat(): BelongsTo
+    {
+        return $this->belongsTo(FlightSeat::class);
     }
 }

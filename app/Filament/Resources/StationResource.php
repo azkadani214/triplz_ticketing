@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class StationResource extends Resource
 {
     protected static ?string $model = Station::class;
+    protected static ?string $navigationGroup = 'Kereta Api';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

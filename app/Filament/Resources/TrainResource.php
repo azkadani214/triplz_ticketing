@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TrainResource extends Resource
 {
     protected static ?string $model = Train::class;
-
+    protected static ?string $navigationGroup = 'Kereta Api';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

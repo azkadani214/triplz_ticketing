@@ -14,12 +14,18 @@ class TransactionPassenger extends Model
         'transaction_id',
         'flight_seat_id',
         'name',
-        'date_of_bird',
+        'date_of_birth', // Perbaiki nama kolom jika salah ketik
         'nationality'
     ];
 
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->belongsTo(TransactionFlight::class, 'transaction_id');
+    }
+
+
+    public function seat()
+    {
+        return $this->belongsTo(FlightSeat::class);
     }
 }

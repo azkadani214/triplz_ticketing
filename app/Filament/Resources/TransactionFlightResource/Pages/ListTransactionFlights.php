@@ -9,5 +9,11 @@ use Filament\Resources\Pages\ListRecords;
 class ListTransactionFlights extends ListRecords
 {
     protected static string $resource = TransactionFlightResource::class;
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+        ];
+    }
 
 }

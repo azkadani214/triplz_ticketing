@@ -17,6 +17,9 @@ class TrainFacilityResource extends Resource
 {
     protected static ?string $model = TrainFacility::class;
 
+    protected static ?string $navigationGroup = 'Kereta Api';
+
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
