@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandLogo(asset('assets/images/logos/triplz-logo.svg'))
             ->brandName('Triplz - Administrator')
             ->login()
             ->colors([

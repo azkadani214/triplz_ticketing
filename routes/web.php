@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Landing page (accessible without login)
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Admin dashboard (using Filament, already configured)
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
